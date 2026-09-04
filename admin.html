@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Trị - Trả Lời Đánh Giá</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-container { max-width: 800px; margin: auto; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .search-box { width: 100%; padding: 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 20px; }
+        .review-card { border: 1px solid #e0e0e0; padding: 15px; margin-bottom: 15px; border-radius: 8px; text-align: left;}
+        .review-text { font-style: italic; color: #555; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed #ccc;}
+        .reply-text { font-weight: bold; color: #1a73e8; margin-bottom: 15px;}
+        .btn-group { display: flex; gap: 10px; }
+        .btn { padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; color: white; font-weight: bold;}
+        .btn-copy { background-color: #1a73e8; }
+        .btn-done { background-color: #34a853; }
+        #no-result { display: none; color: red; }
+    </style>
+</head>
+<body style="align-items: flex-start; padding-top: 50px;">
+    <div class="admin-container">
+        <h2 style="color: #1a73e8; margin-bottom: 20px;">Hệ Thống Trả Lời Đánh Giá (Admin)</h2>
+        <p style="margin-bottom: 15px; color: #666;">Copy một phần đánh giá của khách trên Google Maps và dán vào ô bên dưới để tìm câu trả lời tương ứng:</p>
+        
+        <input type="text" id="search" class="search-box" placeholder="Dán nội dung đánh giá của khách vào đây..." oninput="filterReviews()">
+        
+        <p id="no-result">Không tìm thấy đánh giá này trong hệ thống (Có thể khách tự gõ tay hoặc chưa được đồng bộ).</p>
+
+        <div id="results-container">
+            <!-- Kết quả sẽ hiện ở đây -->
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">Đã chép câu trả lời!</div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

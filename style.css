@@ -1,0 +1,149 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.company-logo {
+    max-width: 180px;
+    height: auto;
+    margin-bottom: 15px;
+    object-fit: contain;
+}
+
+.header h2 {
+    color: #1a73e8;
+    margin-bottom: 10px;
+}
+
+.header p {
+    color: #5f6368;
+    font-size: 15px;
+    margin-bottom: 25px;
+}
+
+.suggestions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.suggestion-btn {
+    background-color: #f8f9fa;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    padding: 15px;
+    font-size: 16px;
+    color: #202124;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    position: relative;
+    line-height: 1.4;
+}
+
+.suggestion-btn:hover {
+    background-color: #e8f0fe;
+    border-color: #1a73e8;
+}
+
+.suggestion-btn:active {
+    background-color: #d2e3fc;
+}
+
+.custom-review {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.custom-review p {
+    color: #5f6368;
+    font-size: 14px;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+#custom-text {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    font-size: 15px;
+    resize: none;
+    margin-bottom: 10px;
+    font-family: inherit;
+}
+
+#custom-text:focus {
+    outline: none;
+    border-color: #1a73e8;
+}
+
+.custom-btn {
+    width: 100%;
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.custom-btn:hover {
+    background-color: #1557b0;
+}
+
+.instructions {
+    background-color: #fff3cd;
+    border: 1px solid #ffe69c;
+    color: #664d03;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: left;
+    line-height: 1.5;
+}
+
+/* Toast notification */
+.toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #323232;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 14px;
+    z-index: 1000;
+    transition: opacity 0.3s;
+}
+
+.toast.hidden {
+    opacity: 0;
+    pointer-events: none;
+}

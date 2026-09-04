@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đánh giá dịch vụ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="logo.png" alt="Logo INSIEUTOC.VN" class="company-logo">
+            <h2>Cảm ơn bạn đã đến!</h2>
+            <p>Vui lòng chọn một nhận xét bên dưới để giúp chúng tôi đánh giá trên Google Maps nhé.</p>
+        </div>
+
+        <div id="suggestions-container" class="suggestions">
+            <!-- Các nút gợi ý sẽ được Javascript thêm vào đây -->
+        </div>
+
+        <div class="custom-review">
+            <p>Hoặc tự viết đánh giá theo ý bạn:</p>
+            <textarea id="custom-text" rows="3" placeholder="Nhập đánh giá của bạn tại đây..."></textarea>
+            <button id="custom-btn" class="custom-btn" onclick="handleCustomSubmit()">Copy & Chuyển đến Google Maps</button>
+        </div>
+
+        <div class="instructions">
+            <p>💡 <b>Hướng dẫn:</b> Khi bấm chọn, nội dung sẽ tự động được copy. Bạn chỉ cần <b>Dán (Paste)</b> vào khung đánh giá và chọn 5 sao nhé!</p>
+        </div>
+    </div>
+
+    <!-- Thông báo nhỏ nhắn (Toast) -->
+    <div id="toast" class="toast hidden">Đã chép nội dung! Đang chuyển hướng...</div>
+
+    <script src="app.js"></script>
+</body>
+</html>
