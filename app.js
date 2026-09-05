@@ -1,4 +1,4 @@
-const GOOGLE_MAPS_REVIEW_LINK = "https://www.google.com/maps/place/In+Si%C3%AAu+T%E1%BB%91c+VN/@10.7845329,106.6166212,1396m/data=!3m1!1e3!4m8!3m7!1s0x31752ea654cdd5d5:0x8a87d0684a6ba08e!8m2!3d10.7845276!4d106.6191961!9m1!1b1!16s%2Fg%2F11g9gr9g76?entry=ttu&g_ep=EgoyMDI2MDkwMS4wIKXMDSoASAFQAw%3D%3D";
+const GOOGLE_MAPS_REVIEW_LINK = "https://g.page/r/CY6ga0po0IeKEBM/review";
 const FIREBASE_DB_URL = "https://insieutoc-review-default-rtdb.asia-southeast1.firebasedatabase.app";
 
 async function fetchSuggestions() {
