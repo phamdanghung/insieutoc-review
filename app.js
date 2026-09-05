@@ -1,6 +1,12 @@
 const GOOGLE_MAPS_REVIEW_LINK = "https://g.page/r/CY6ga0po0IeKEBM/review";
 const FIREBASE_DB_URL = "https://insieutoc-review-default-rtdb.asia-southeast1.firebasedatabase.app";
 
+// Tính năng nhận diện trình duyệt Zalo
+function isZaloBrowser() {
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    return (ua.indexOf("Zalo") > -1);
+}
+
 async function fetchSuggestions() {
     try {
         const response = await fetch(`${FIREBASE_DB_URL}/available.json`);
@@ -92,4 +98,25 @@ function showToast() {
     setTimeout(() => { toast.classList.add('hidden'); }, 2000);
 }
 
-document.addEventListener('DOMContentLoaded', fetchSuggestions);
+document.addEventListener('DOMContentLoaded', () => {
+    // Nếu là Zalo, hiện cảnh báo ngay trên đầu trang
+    if (isZaloBrowser()) {
+        const container = document.querySelector('.container');
+        const warning = document.createElement('div');
+        warning.style.backgroundColor = '#d93025';
+        warning.style.color = 'white';
+        warning.style.padding = '15px';
+        warning.style.borderRadius = '8px';
+        warning.style.marginBottom = '20px';
+        warning.style.textAlign = 'left';
+        warning.innerHTML = `
+            <strong style="font-size:16px;">⚠️ LƯU Ý QUAN TRỌNG:</strong><br/><br/>
+            Bạn đang dùng trình duyệt Zalo. Zalo có thể sẽ <b>CHẶN</b> tính năng chuyển sang Google Maps.<br/><br/>
+            👉 Để đánh giá thành công, vui lòng bấm vào nút <strong>[ ⋮ ]</strong> hoặc <strong>[ ... ]</strong> ở góc phải trên cùng màn hình -> chọn <strong>"Mở bằng trình duyệt"</strong> (Safari / Chrome / Internet).
+        `;
+        container.insertBefore(warning, container.firstChild);
+    }
+    
+    // Gọi hàm tải dữ liệu
+    fetchSuggestions();
+});
