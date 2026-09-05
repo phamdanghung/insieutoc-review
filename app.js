@@ -70,7 +70,7 @@ async function handleSuggestionClick(id, text) {
         }
         
         showToast();
-        setTimeout(() => { window.location.href = GOOGLE_MAPS_REVIEW_LINK; }, 2000);
+        window.location.href = GOOGLE_MAPS_REVIEW_LINK;
     } catch (err) {
         alert('Có lỗi xảy ra, vui lòng thử lại.');
     }
@@ -86,7 +86,7 @@ async function handleCustomSubmit() {
     try {
         await navigator.clipboard.writeText(text);
         showToast();
-        setTimeout(() => { window.location.href = GOOGLE_MAPS_REVIEW_LINK; }, 2000);
+        window.location.href = GOOGLE_MAPS_REVIEW_LINK;
     } catch (err) {
         alert('Có lỗi xảy ra, không thể copy tự động. Vui lòng copy bằng tay.');
     }
