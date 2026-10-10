@@ -147,3 +147,24 @@ body {
     opacity: 0;
     pointer-events: none;
 }
+
+/* Mẹo hướng dẫn mở trình duyệt cho iPhone trên Zalo */
+.ios-zalo-tip {
+    background-color: #e8f0fe;
+    border: 1px solid #aecbfa;
+    color: #174ea6;
+    padding: 12px 14px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: left;
+    font-size: 13.5px;
+    line-height: 1.5;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.ios-zalo-tip .tip-icon {
+    font-size: 20px;
+    line-height: 1;
+}

@@ -98,11 +98,37 @@ function renderSuggestions(suggestions) {
     });
 }
 
+// Nhận diện thiết bị và môi trường ứng dụng
+function getDeviceInfo() {
+    const ua = navigator.userAgent || navigator.vendor || window.opera || '';
+    const isZalo = ua.indexOf("Zalo") > -1;
+    const isAndroid = /android/i.test(ua);
+    const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+    return { isZalo, isAndroid, isIOS };
+}
+
+// Hàm chuyển hướng thông minh: 1 chạm mở thẳng App Google Maps trên Android
+function redirectToGoogleMaps() {
+    const { isAndroid } = getDeviceInfo();
+
+    if (isAndroid) {
+        // Trên điện thoại Android (kể cả quét bằng Zalo):
+        // Dùng Intent gọi thẳng ứng dụng Google Maps chính thức của máy (luôn có sẵn tài khoản Gmail)
+        // -> ĐÚNG 1 CHẠM LÀ MỞ NGAY MÀN HÌNH ĐÁNH GIÁ 5 SAO, TUYỆT ĐỐI KHÔNG BỊ HỎI ĐĂNG NHẬP!
+        const intentUrl = "intent://g.page/r/CY6ga0po0IeKEBM/review#Intent;scheme=https;package=com.google.android.apps.maps;S.browser_fallback_url=https%3A%2F%2Fg.page%2Fr%2FCY6ga0po0IeKEBM%2Freview;end";
+        window.location.href = intentUrl;
+        return;
+    }
+
+    // Trên iPhone hoặc thiết bị khác
+    window.location.href = GOOGLE_MAPS_REVIEW_LINK;
+}
+
 // Bấm vào câu có sẵn
 async function handleSuggestionClick(id, text) {
     // 1. Copy vào bộ nhớ tạm
     await copyToClipboard(text);
-    showToast();
+    showToast("✓ Đã copy đánh giá! Đang mở Google Maps...");
 
     // 2. Ghi nhận lên Firebase trong nền (không làm trễ khách hàng)
     if (id && !String(id).startsWith('fb-')) {
@@ -118,9 +144,9 @@ async function handleSuggestionClick(id, text) {
         }
     }
 
-    // 3. Chuyển hướng tới Google Maps sau khi đã sao chép
+    // 3. Tự động chuyển thẳng tới Google Maps sau khi đã sao chép
     setTimeout(() => {
-        window.location.href = GOOGLE_MAPS_REVIEW_LINK;
+        redirectToGoogleMaps();
     }, 400);
 }
 
@@ -133,35 +159,35 @@ async function handleCustomSubmit() {
     }
     
     await copyToClipboard(text);
-    showToast();
+    showToast("✓ Đã copy nội dung! Đang mở Google Maps...");
     setTimeout(() => {
-        window.location.href = GOOGLE_MAPS_REVIEW_LINK;
+        redirectToGoogleMaps();
     }, 400);
 }
 
-function showToast() {
+function showToast(msg) {
     const toast = document.getElementById('toast');
+    if (msg) toast.innerText = msg;
     toast.classList.remove('hidden');
-    setTimeout(() => { toast.classList.add('hidden'); }, 2000);
+    setTimeout(() => { toast.classList.add('hidden'); }, 2500);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Nếu là Zalo, hiện cảnh báo ngay trên đầu trang
-    if (isZaloBrowser()) {
+    const { isZalo, isIOS } = getDeviceInfo();
+
+    // Chỉ hiển thị mẹo nhẹ nhàng khi khách dùng iPhone trên Zalo (vì iPhone cần mở Safari để dùng chung đăng nhập Google)
+    // Đối với Android trên Zalo: Hệ thống tự động nhảy thẳng vào App Google Maps nên KHÔNG CẦN hiện cảnh báo gây rối mắt!
+    if (isZalo && isIOS) {
         const container = document.querySelector('.container');
-        const warning = document.createElement('div');
-        warning.style.backgroundColor = '#d93025';
-        warning.style.color = 'white';
-        warning.style.padding = '15px';
-        warning.style.borderRadius = '8px';
-        warning.style.marginBottom = '20px';
-        warning.style.textAlign = 'left';
-        warning.innerHTML = `
-            <strong style="font-size:16px;">⚠️ LƯU Ý QUAN TRỌNG:</strong><br/><br/>
-            Bạn đang dùng trình duyệt Zalo. Zalo có thể sẽ <b>CHẶN</b> tính năng chuyển sang Google Maps.<br/><br/>
-            👉 Để đánh giá thành công, vui lòng bấm vào nút <strong>[ ⋮ ]</strong> hoặc <strong>[ ... ]</strong> ở góc phải trên cùng màn hình -> chọn <strong>"Mở bằng trình duyệt"</strong> (Safari / Chrome / Internet).
+        const tip = document.createElement('div');
+        tip.className = 'ios-zalo-tip';
+        tip.innerHTML = `
+            <span class="tip-icon">💡</span>
+            <div>
+                <strong>Mẹo cho iPhone:</strong> Nếu thấy yêu cầu nhập email, bạn chỉ cần bấm vào nút <strong>[ ... ]</strong> ở góc phải trên màn hình ➔ Chọn <strong>"Mở bằng trình duyệt"</strong> (Safari) để đánh giá ngay nhé! ↗️
+            </div>
         `;
-        container.insertBefore(warning, container.firstChild);
+        container.insertBefore(tip, container.firstChild);
     }
     
     // Gọi hàm tải dữ liệu
